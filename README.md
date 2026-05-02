@@ -1,80 +1,138 @@
-# Café Sales Analysis
+# ☕ Café Sales Analytics & Forecasting
 
-## 📊 Project Overview
+## 📌 Overview
 
-This project performs a comprehensive **sales analysis** for a café using transactional data. The dataset includes information about:
-
-- Items sold (`Item`)
-- Quantity sold (`Quantity`)
-- Total revenue (`Total Spent`)
-- Payment methods (`Payment Method`)
-- Transaction dates (`Transaction Date`)
-
-The analysis provides actionable insights into **monthly revenue trends**, **top-selling items**, **payment method usage**, and **overall sales performance**.
+This project analyzes café transactional data and builds a **time-series forecasting model** to predict future sales.
+The workflow covers data cleaning, exploratory analysis, feature engineering, and machine learning.
 
 ---
 
-## 🗂 Dataset
+## 🎯 Problem Statement
 
-| Column Name        | Description                                        |
-|-------------------|--------------------------------------------------|
-| Transaction ID     | Unique ID for each transaction                  |
-| Item               | Name of the item sold                             |
-| Quantity           | Number of units sold                              |
-| Price Per Unit     | Price of one unit of the item                     |
-| Total Spent        | Total amount spent in the transaction            |
-| Payment Method     | Payment type used (Cash, Credit Card, Digital Wallet) |
-| Location           | Purchase location (Takeaway, In-store)           |
-| Transaction Date   | Date of transaction                               |
+Raw transactional data often contains inconsistencies and missing values, making it difficult to extract reliable business insights.
 
-> **Note:** Only one year of data is available, but monthly trends are analyzed.
+This project aims to:
+
+* Clean and validate sales data
+* Identify trends in customer behavior and revenue
+* Build a forecasting model for short-term sales prediction
 
 ---
 
-## 🔍 Analysis Performed
+## 🧠 Approach
 
-1. **Revenue Analysis**
-   - Total revenue by month
-   - Total quantity sold by month
-   - Revenue contribution by item
+### 1. Data Cleaning
 
-2. **Item-Level Analysis**
-   - Most sold items by quantity
-   - Highest revenue-generating items
-   - Item sales trends across months
+* Handled missing values in `Total Spent` by reconstructing using:
 
-3. **Payment Method Analysis**
-   - Transaction count by payment method
-   - Revenue per payment method
-   - Monthly trends for each payment method
-
-4. **Cross Analysis**
-   - Item vs Month sales
-   - Payment method vs Month revenue
-
-5. **Outlier Detection**
-   - Unusually high or low transaction amounts
-
-6. **Visualizations**
-   - Bar charts for revenue per month and top items
-   - Pie charts for payment method distribution
-   - Line charts showing monthly trends
+  * `Quantity × Price Per Unit`
+* Converted columns to correct data types
+* Validated transactional consistency
 
 ---
 
-## 📈 Key Insights
+### 2. Exploratory Data Analysis (EDA)
 
-- Identified **months with highest sales revenue**  
-- Determined **top-selling items** and their contribution to revenue  
-- Analyzed **customer payment preferences**  
-- Highlighted **anomalous transactions** for further review  
+* Daily, weekly, and monthly sales trends
+* Payment method analysis
+* Location-based revenue distribution
 
 ---
 
-## 💻 Tools & Libraries
+### 3. Feature Engineering
 
-- Python 3  
-- Jupyter Notebook / Google Colab  
-- pandas, numpy  
-- matplotlib, seaborn  
+To improve model performance, additional features were created:
 
+* `Day` → Time index
+* `Lag1` → Previous day sales
+* `RollingMean7` → 7-day moving average
+
+---
+
+### 4. Modeling
+
+#### Baseline Model
+
+* Linear Regression using only time index (`Day`)
+* Captured overall trend but failed to model fluctuations
+
+#### Improved Model
+
+* Added `Lag1` and `RollingMean7`
+* Better captured short-term variations in sales
+
+---
+
+### 5. Evaluation
+
+* Metric used: **Mean Absolute Error (MAE)**
+* Improved model showed better alignment with actual sales trends compared to baseline
+
+---
+
+## 📈 Results & Insights
+
+* Sales show significant daily fluctuations
+* Simple time-based models are insufficient for capturing real-world behavior
+* Feature engineering significantly improves prediction quality
+* Forecasting provides a rough estimate of short-term sales trends
+
+---
+
+## ⚠️ Limitations
+
+* Dataset contains only 1 year of data
+* Limited ability to capture long-term seasonality
+* External factors (holidays, promotions) not included
+* Forecasting is suitable only for short-term predictions
+
+---
+
+## 🚀 Future Improvements
+
+* Incorporate advanced models (ARIMA, Prophet)
+* Add external features (holiday, demand patterns)
+* Improve forecasting with dynamic lag updates
+
+---
+
+## 🛠️ Tech Stack
+
+* Python
+* Pandas, NumPy
+* Matplotlib
+* Scikit-learn
+
+---
+
+## ▶️ How to Run
+
+```bash
+pip install -r requirements.txt
+jupyter notebook
+```
+
+---
+
+## 📂 Project Structure
+
+```
+cafe-sales-analysis/
+│
+├── data/
+├── notebooks/
+├── src/
+├── README.md
+```
+
+---
+
+## 💡 Key Takeaway
+
+This project highlights how **data cleaning and feature engineering directly impact model performance**, even when using simple machine learning algorithms.
+
+---
+
+## 👤 Author
+
+**Jasmin Banu M**
